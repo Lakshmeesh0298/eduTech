@@ -1,4 +1,4 @@
-const  {PostCourse,getcourse,searchCourse, getSingleCourse, getSingleCategories} = require ('../controllers/skillaryController')
+const  {PostCourse,getcourse,searchCourse, getSingleCourse, getSingleCategories,deletecourse,filterCourse} = require ('../controllers/skillaryController')
 const express=require('express')
 const multer=require('multer')
 
@@ -9,15 +9,14 @@ let upload=multer({storage})
 
 
 Router.post('/',upload.any(['image','video']),PostCourse);
+Router.route('/').delete(deletecourse).get(getcourse)
+Router.route('/filter').get(filterCourse)
 
-// Router.route('/').get(getCOurse)
 
-Router.get('/',getcourse);
-
-Router.get('/search/:search',searchCourse);
-
-Router.get('/category/:subcategory', getSingleCourse);
-Router.get('/singlecategory/:category',getSingleCategories );
+ //todo: changes to be done to exclude the params 
+// Router.get('/search/:search',searchCourse);
+// Router.get('/category/:subcategory', getSingleCourse);
+// Router.get('/singlecategory/:category',getSingleCategories );
 
 
 

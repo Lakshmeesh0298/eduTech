@@ -1,74 +1,77 @@
 const SkillarySchema = require("../Model/skillarySchema");
-let cloudinary = require("cloudinary").v2;
+// let cloudinary = require("cloudinary").v2;
 
+// cloudinary.config({
+//   cloud_name: "dmmfp9rcj",
+//   api_key: "954588356774862",
+//   api_secret: "0fmk6pIou8zlLYolbtcINEliCEo",
+//   secure: true,
+// });
+
+var cloudinary = require('cloudinary').v2
 cloudinary.config({
-  cloud_name: "dmmfp9rcj",
-  api_key: "954588356774862",
-  api_secret: "0fmk6pIou8zlLYolbtcINEliCEo",
-  secure: true,
-});
+  cloud_name: 'shubhamthegreat',
+  api_key: '552848858169248',
+  api_secret: 'rzI_DlXFCk7frC2IggFyBXdeSEU',
+})
 
 //method post
 // /course where / is default
 
-const PostCourse = (req, res) => {
-  try {
-    let {
-      categories,
-      subcategory,
-      coursename,
-      title,
-      description,
-      course_overView,
-      author,
-      course_curriculum,
-      lecture,
-      instruction_Level,
-      price,
-      currency,
-      language,
-      course_overview,
-    } = req.body;
-    let payload = req.files;
-    let uploadeddata = [...payload];
-    let ImageLink = new Array();                     //todo==OR ==let ImageLink=[];
-    for (let i = 0; i < uploadeddata.length; i++) {
+// updated & working 
+const PostCourse = (req, res, next) => {
+  let image = req.files;
+  var imagedata = image.filter((data) => {
+    if (data.fieldname == "image") {
+      return data;
+    }
+  });
+
+  let videodata = image.filter((data) => {
+    if (data.fieldname == "video") {
+      return data;
+    }
+  });
+  //  now push data to database and cloudinary
+  let cloudinaryPayload = [...imagedata];
+
+  var cloudinaryUpload = (value) => {
+    let imagelink = new Array();
+    value.map((data) => {
       cloudinary.uploader.upload(
-        uploadeddata[i].path,
-        { folder: "uploader" },
-        function (err, result) {
-          ImageLink.push(result.url);
-          if (ImageLink.length >= uploadeddata.length - 1) {
-            let data = SkillarySchema({
-              categories,
-              subcategory,
-              coursename,
-              title,
-              description,
-              course_overView,
-              author,
-              course_curriculum,
-              lecture,
-              instruction_Level,
-              price,
-              currency,
-              language,
-              course_overview,
-              image: [...ImageLink],
-            }).save();
-            res.status(201).json({
-              status: "true",
-              message: "data added",
-              data: data,
-            });
+        data.path,
+        { folder: "skillary" },
+        (err, result) => {
+          if (err) throw err;
+          if (result.url !== null) {
+            imagelink.push(result.url);
+            if (imagelink.length >= imagedata.length) {
+              uploadtoDatabase(); //  push all data to database
+              async function uploadtoDatabase() {
+                try {
+                  let payload = {
+                    ...req.body,
+                    image: imagelink,
+                    video: videodata,
+                  };
+                  let data = SkillarySchema(payload).save();
+                  res.status(201).json({
+                    status: "true",
+                    message: "data successfully sent to database",
+                    data
+                  });
+                } catch (error) {
+                  throw error
+                }
+              }
+            }
           }
         }
       );
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+    });
+  };
+  cloudinaryUpload(cloudinaryPayload);
+}
 
 const getcourse = async (req, res, next) => {
   let data = await SkillarySchema.find({});
@@ -79,6 +82,56 @@ const getcourse = async (req, res, next) => {
     data,
   });
 };
+
+const deletecourse = async(req,res,next)=>{
+  try {
+  let data = await SkillarySchema.findByIdAndDelete(req.params.id)
+  res.status(201).json({
+    status:"true",
+    message:"data deleted successfully",
+    data
+  })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const filterCourse = async (req,res,next)=>{
+  
+  // shallow copy of query 
+
+  const queryObj = {...req.query}
+  const excludeField = ['sort',"page",'limit','fields']
+  excludeField.forEach(x=>{
+    delete queryObj[x]
+  })
+
+  // Advanced filtering
+
+  let queryString = JSON.stringify(queryObj)
+  // so we get :{ price: { gte: '6000' }, categories: 'DataScience' }
+  // so we need :{ price: { $gte: '6000' }, categories: 'DataScience' } 
+  queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g,match=>`$${match}`)
+  let query = SkillarySchema.find(JSON.parse(queryString))
+ 
+  const course = await query
+  res.status(201).json({
+    status:"true",
+    length:course.length,
+    course
+  })
+
+}
+
+
+
+
+
+
+
+
+
+//  need to test 
 
 const searchCourse = async (req, res, next) => {
   console.log("search");
@@ -125,4 +178,4 @@ const getSingleCategories = async (req, res, next) => {
   });
 };
 
-module.exports = { PostCourse, getcourse, searchCourse, getSingleCourse,getSingleCategories };
+module.exports = { PostCourse, getcourse, searchCourse, getSingleCourse,getSingleCategories,deletecourse,filterCourse };
