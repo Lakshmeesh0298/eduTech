@@ -1,12 +1,4 @@
 const SkillarySchema = require("../Model/skillarySchema");
-// let cloudinary = require("cloudinary").v2;
-
-// cloudinary.config({
-//   cloud_name: "dmmfp9rcj",
-//   api_key: "954588356774862",
-//   api_secret: "0fmk6pIou8zlLYolbtcINEliCEo",
-//   secure: true,
-// });
 
 var cloudinary = require('cloudinary').v2
 cloudinary.config({
@@ -61,7 +53,10 @@ const PostCourse = (req, res, next) => {
                     data
                   });
                 } catch (error) {
-                  throw error
+                    res.status(500).json({
+                      message:error.message
+                      
+                    })
                 }
               }
             }

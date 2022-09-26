@@ -10,13 +10,15 @@ let upload=multer({storage})
 
 Router.post('/',upload.any(['image','video']),PostCourse);
 Router.route('/').delete(deletecourse).get(getcourse)
-Router.route('/filter').get(filterCourse)
+// Router.route('/filter').get(filterCourse)
+
+
 
 
  //todo: changes to be done to exclude the params 
-// Router.get('/search/:search',searchCourse);
-// Router.get('/category/:subcategory', getSingleCourse);
-// Router.get('/singlecategory/:category',getSingleCategories );
+ Router.get('/search/:search',searchCourse);
+Router.get('/category/:subcategory', getSingleCourse);
+Router.get('/singlecategory/:category',getSingleCategories );
 
 
 
