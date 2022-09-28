@@ -35,22 +35,35 @@ permit loading resources.
 PACKAGE JSON
 URL’S
 Course URL
+
 1. To Get all Course
 Request type :- Get
 url:- http://localhost:5000/course/
+
 2. To add Course
 Request type:- POST
 Content-type: multipart/form-data
 url:- http://localhost:5000/course/
+
 3. Search
 Request type: GET
 URL: http://localhost:5000/course/search/search
 Search: subcategory, price, language, author
+
 4. Get Single Course
 Request type: GET
 URL: http://localhost:5000/course/course/category/subcategory
 Subcategory: html,css, js, maths
+
+5. add course to cart
+Request type:put
+url: http://localhost:5000/user/course_id/add
+{
+  "userId":"id of the user"
+}
+
 Auth URL’s
+
 1. To Register User
 Request type:- POST
 Content-type: application/json
@@ -60,6 +73,7 @@ url:- http://localhost:5000/auth/register
  "email":"harishrao.star396@gmail.com",
  "password":"harish"
 }
+
 2. to Login User
 Request type:- POST
 Content-type: application/json
@@ -69,6 +83,7 @@ url:- http://localhost:5000/auth/login
  "email":"harishrao.star396@gmail.com",
  "password":"harish"
 }
+
 3. Forgot password
 Request type:- POST
 Content-type: application/json
@@ -76,6 +91,7 @@ url:- http://localhost:5000/auth/forgot-password
 {
  "registeredEmail":"harishrao.star396@gmail.com"
 }
+
 4. Reset Password
 Request type:- POST
 Content-type: application/json
@@ -85,6 +101,7 @@ url:- http://localhost:5000/auth/reset-password
  "newPassword":"harishrao",
  "confirmNewPassword":"harishrao"
 }
+
 5. Logout
 Request type:- GET
 Token: Required

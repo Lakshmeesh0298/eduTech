@@ -26,7 +26,7 @@ const startServer = () => {
 
     app.use("/auth", authRoute);
     app.use("/user", profileRoute);
-    app.use('/course',courseRoute)
+    app.use('/course',courseRoute);
     app.use(errorHandler);
     app.listen(PORT, (err) => {
       if (err) throw err;
