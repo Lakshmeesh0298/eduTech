@@ -4,8 +4,6 @@ const errorResponse = require("../utils/errorResponse");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const { GMAILPASSWORD } = require("../config");
-// const jwt = require("jsonwebtoken");
-// const _ = require("lodash");
 
 //errorResponse function
 const sendResponseToken = (user, statusCode, res) => {
@@ -17,7 +15,7 @@ const sendResponseToken = (user, statusCode, res) => {
   };
   res
     .status(statusCode)
-    .json({ success: true, message: "successfully token fetched", TOKEN })
+    .json({ success: true, message: "successfully token fetched", user , TOKEN })
     .cookie("cookie", options, TOKEN);
 };
 
