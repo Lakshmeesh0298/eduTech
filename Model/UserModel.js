@@ -61,6 +61,7 @@ const UserSchema = new Schema(
     notification: {
       type: String,
     },
+    cart:[],
     purchased_course: [],
     published_course: [],
     details1: [],

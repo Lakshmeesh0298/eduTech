@@ -16,6 +16,7 @@ exports.protection = async (req, res, next) => {
     try {
       let decoded = jwt.verify(token, JWT_SECRET);
       req.user = await AuthModel.findById(decoded.id);
+      console.log(req.user)
       next();
     } catch (error) {
       console.log(error);
