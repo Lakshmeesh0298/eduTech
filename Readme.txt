@@ -1,39 +1,50 @@
 PROJECT EDUTECH
+
 MODULES USED
+
 MONGOOSE
 Mongoose is a Node. js-based Object Data Modeling (ODM) library for MongoDB. It is akin to an 
 Object Relational Mapper (ORM) such as SQLAlchemy for traditional SQL databases. The problem 
 that Mongoose aims to solve is allowing developers to enforce a specific schema at the application 
 layer.
+
 CLOUDINARY
 Cloudinary is an end-to-end image- and video-management solution for websites and mobile apps, 
 covering everything from image and video uploads, storage, manipulations, optimizations to 
 delivery.
+
 JWT
 JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained 
 way for securely transmitting information between parties as a JSON object. This information can be 
 verified and trusted because it is digitally signed.
+
 BCRYPT
 Bcrypt allows building a password security platform that can evolve alongside hardware technology 
 to guard against the threats that the future may bring, such as attackers having the computing 
 power to crack passwords twice as fast.
+
 NODEMAILER
 Nodemailer is a Node. js module that allows you to send emails from your server with ease. Whether 
 you want to communicate with your users or just notify yourself when something has gone wrong, 
 one of the options for doing so is through mail.
+
 MORGAN
 morgan is a Node. js and Express middleware to log HTTP requests and errors, and simplifies the 
 process.
+
 MULTER
 Multer is a node. js middleware for handling multipart/form-data , which is primarily used for 
 uploading files. It is written on top of busboy for maximum efficiency. NOTE: Multer will not process 
 any form which is not multipart ( multipart/form-data ).
+
 CORS
 Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to 
 indicate any origins (domain, scheme, or port) other than its own from which a browser should 
 permit loading resources.
 PACKAGE JSON
+
 URL’S
+
 Course URL
 
 1. To Get all Course
